@@ -16,7 +16,7 @@ class CartProductItemWidget extends StatelessWidget {
     return Card(
         elevation: 1,
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 4),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 14),
           child: Row(
@@ -42,7 +42,7 @@ class CartProductItemWidget extends StatelessWidget {
                                   maxLines: 1,
                                   style: textTheme.bodyLarge?.copyWith(overflow: TextOverflow.ellipsis),
                                 ),
-                                Row(
+                                const Row(
                                   children: [
                                     Text('Color: Red'),
                                     SizedBox(width: 8,),
@@ -54,17 +54,17 @@ class CartProductItemWidget extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.delete_outline),),
+                            icon: const Icon(Icons.delete_outline),),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                         mainAxisAlignment:
                         MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('\$100',style: TextStyle(
+                          const Text('\$100',style: TextStyle(
                               color: AppColors.themeColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 18
