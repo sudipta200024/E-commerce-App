@@ -9,7 +9,7 @@ class EmailVerificationController extends GetxController {
   Future<void> verifyEmail(String email)async{
     _inProgress = true;
     update();
-    final NetworkResponse response = await *Get.find<NetworkCaller>().getRequest(Urls.verifyEmailUrl(email));
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.verifyEmailUrl(email));
     
   }
 }
