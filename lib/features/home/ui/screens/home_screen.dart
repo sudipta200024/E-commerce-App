@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeSectionHeader(
                 title: 'Category',
                 onTap: () {
-                  Get.find<MainBottomNavControllers>().moveToCategory();
+                  Get.find<MainBottomNavController>().moveToCategory();
                 },
               ),
               const SizedBox(

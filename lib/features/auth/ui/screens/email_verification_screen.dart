@@ -81,6 +81,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       ),
     );
   }
+  _onTapNextButton(){
+    if(_formKey.currentState!.validate()){
+      
+    }
+  }
   @override
   void dispose() {
     _emailTEController.dispose();

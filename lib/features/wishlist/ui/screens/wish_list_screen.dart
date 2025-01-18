@@ -41,6 +41,6 @@ class _WishListScreenState extends State<WishListScreen> {
     );
   }
   _onPop(){
-    Get.find<MainBottomNavControllers>().backToHome();
+    Get.find<MainBottomNavController>().backToHome();
   }
 }
