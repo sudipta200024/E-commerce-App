@@ -1,7 +1,9 @@
-import 'package:ecommerce/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:ecommerce/features/auth/ui/controllers/email_verification_controller.dart';
 import 'package:ecommerce/features/auth/ui/widgets/app_logo_widget.dart';
+import 'package:ecommerce/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -14,9 +16,10 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
-
   final TextEditingController _emailTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final EmailVerificationController _emailVerificationController =
+      Get.find<EmailVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Form(
-
             child: Column(
               key: _formKey,
               children: [
@@ -50,29 +52,34 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                 TextFormField(
-                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(hintText: "Enter your email"),
-                   keyboardType: TextInputType.emailAddress,
-                   validator: (String? value){
-                     if(value?.trim().isEmpty ?? true){
-                       return 'Enter your email address';
-                     }
-                     if(EmailValidator.validate(value!)==false){
-                       return "Enter a valid email";
-                     }
-                     return null;
-                   },
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration:
+                      const InputDecoration(hintText: "Enter your email"),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (String? value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return 'Enter your email address';
+                    }
+                    if (EmailValidator.validate(value!) == false) {
+                      return "Enter a valid email";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // if(_formKey.currentState!.validate()){}
-                    Navigator.pushReplacementNamed(context, OTPVerificationScreen.name);
-                  },
-                  child: const Text('Next'),
+                GetBuilder<EmailVerificationController>(
+                  builder: (controllers) {
+                    if(controllers.inProgress){
+                      return const CenteredCircularProgressIndicator();
+                    }
+                    return ElevatedButton(
+                      onPressed: _onTapNextButton,
+                      child: const Text('Next'),
+                    );
+                  }
                 ),
               ],
             ),
@@ -81,11 +88,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       ),
     );
   }
-  _onTapNextButton(){
-    if(_formKey.currentState!.validate()){
-      
+
+  _onTapNextButton() {
+    if (_formKey.currentState!.validate()) {
+      _emailVerificationController.verifyEmail(_emailTEController.text.trim());
     }
   }
+
   @override
   void dispose() {
     _emailTEController.dispose();
